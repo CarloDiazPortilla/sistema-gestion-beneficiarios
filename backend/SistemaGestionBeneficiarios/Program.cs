@@ -1,3 +1,5 @@
+using SistemaGestionBeneficiarios.API.Repositories;
+using SistemaGestionBeneficiarios.API.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,10 @@ builder.Services.AddSwaggerGen( c =>
         }
     });
 });
+
+// Registrar repositorios
+builder.Services.AddScoped<IDocumentoIdentidadRepository, DocumentoIdentidadRepository>();
+builder.Services.AddScoped<IBeneficiarioRepository, BeneficiarioRepository>();
 
 // CORS Configuration
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? new[] { "http://localhost:5173" } ;
