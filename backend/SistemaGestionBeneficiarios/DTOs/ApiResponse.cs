@@ -18,7 +18,7 @@
             };
         }
 
-        public static ApiResponse<T> ErrorResponse(string message, List<string>? errors)
+        public static ApiResponse<T> ErrorResponse(string message, List<string>? errors = null)
         {
             return new ApiResponse<T>
             {
