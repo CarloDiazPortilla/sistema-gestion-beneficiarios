@@ -1,6 +1,7 @@
 import type { Beneficiario } from "@/types/beneficiario.types";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
 import type { BeneficiarioFormData } from "@/types/form.types";
+import { BeneficiarioForm } from "./BeneficiarioForm";
 
 interface BeneficiarioModalProps {
   isOpen: boolean;
@@ -31,7 +32,12 @@ export const BeneficiarioModal = ({
           </DialogDescription>
         </DialogHeader>
 
-        {/* Formulario para beneficiario */}
+        <BeneficiarioForm
+          beneficiario={beneficiario}
+          onSubmit={onSubmit}
+          onCancel={onClose}
+          isLoading={isLoading}
+        />
       </DialogContent>
     </Dialog>
   );
