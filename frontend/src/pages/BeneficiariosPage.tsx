@@ -1,4 +1,5 @@
 import { BeneficiarioModal } from "@/components/BeneficiarioModal"
+import { BeneficiarioTable } from "@/components/BeneficiarioTable"
 import { DeleteConfirmModal } from "@/components/DeleteConfirmModal"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -31,9 +32,28 @@ export const BeneficiariosPage = () => {
     fetchBeneficiarios();
   }, []);
 
+  const filteredBeneficiarios = beneficiarios.filter((b) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      b.nombres.toLowerCase().includes(searchLower) ||
+      b.apellidos.toLowerCase().includes(searchLower) ||
+      b.numeroDocumento.includes(searchTerm)
+    );
+  });
+
   const handleCreate = () => {
     setSelectedBeneficiario(null);
     setIsModalOpen(true);
+  };
+
+  const handleEdit = (beneficiario: Beneficiario) => {
+    setSelectedBeneficiario(beneficiario);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = (beneficiario: Beneficiario) => {
+    setSelectedBeneficiario(beneficiario);
+    setIsDeleteModalOpen(true);
   };
 
   const handleSubmit = async (data: BeneficiarioFormData) => {
@@ -123,8 +143,13 @@ export const BeneficiariosPage = () => {
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-0">
-              Tabla de beneficiarios
+            <CardContent >
+              <BeneficiarioTable
+                beneficiarios={filteredBeneficiarios}
+                onEdit={handleEdit}
+                onDelete={handleDeleteClick}
+                isLoading={isLoading}
+              />
             </CardContent>
           </Card>
 
